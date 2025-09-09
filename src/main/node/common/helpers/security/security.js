@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const { variables } = require('../config/env');
+const { variables } = require('../../config/env');
 
 let joseModule = null;
 

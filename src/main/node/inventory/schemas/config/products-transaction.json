@@ -1,0 +1,211 @@
+{
+  "schema": "products_transaction",
+  "timestamps": true,
+  "attributes": [
+    {
+      "unique": true,
+      "name": "sku",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 6,
+      "maxlength": 128,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": true,
+      "name": "barcode",
+      "type": "String",
+      "index": true,
+      "required": false,
+      "minlength": 1,
+      "maxlength": 32,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "name",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 1,
+      "maxlength": 32,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "brand",
+      "type": "String",
+      "index": true,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "category",
+      "type": "String",
+      "index": true,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "unit",
+      "type": "String",
+      "index": true,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "unitPrice",
+      "type": "Number",
+      "index": false,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "currency",
+      "type": "String",
+      "index": true,
+      "required": false,
+      "minlength": 2,
+      "maxlength": 6,
+      "sparse": true,
+      "enum": null,
+      "default": "PEN",
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "quantity",
+      "type": "Number",
+      "index": false,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "totalPrice",
+      "type": "Number",
+      "index": false,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "store",
+      "type": "ObjectId",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": "stores"
+    },
+    {
+      "name": "createdBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    },
+    {
+      "name": "updatedBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "ObjectId",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    }
+  ]
+}

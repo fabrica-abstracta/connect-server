@@ -10,6 +10,12 @@ class AppError extends Error {
   }
 }
 
+class BadRequestError extends AppError {
+  constructor(message = 'Solicitud incorrecta') {
+    super(message, 400, 'BAD_REQUEST');
+  }
+}
+
 class ConflictError extends AppError {
   constructor(message = 'Conflicto con el estado actual del recurso') {
     super(message, 409, 'CONFLICT');
@@ -41,13 +47,41 @@ class ForbiddenError extends AppError {
   }
 }
 
+class InternalServerError extends AppError {
+  constructor(message = 'Error interno del servidor') {
+    super(message, 500, 'INTERNAL_SERVER_ERROR');
+  }
+}
+
+class ServiceUnavailableError extends AppError {
+  constructor(message = 'Servicio no disponible') {
+    super(message, 503, 'SERVICE_UNAVAILABLE');
+  }
+}
+
+class GatewayTimeoutError extends AppError {
+  constructor(message = 'Tiempo de espera agotado en el servidor') {
+    super(message, 504, 'GATEWAY_TIMEOUT');
+  }
+}
+
+class TooManyRequestsError extends AppError {
+  constructor(message = 'Demasiadas solicitudes, intente más tarde') {
+    super(message, 429, 'TOO_MANY_REQUESTS');
+  }
+}
+
 const exceptions = {
-  badRequest: (msg) => new AppError(msg || 'Solicitud incorrecta'),
+  badRequest: (msg) => new BadRequestError(msg || 'Solicitud incorrecta'),
   notFound: (msg) => new NotFoundError(msg || 'Recurso no encontrado'),
   conflict: (msg) => new ConflictError(msg || 'Conflicto con el estado actual del recurso'),
   validation: (msg, errors) => new ValidationError(msg || 'Datos de entrada inválidos', errors),
   unauthorized: (msg) => new UnauthorizedError(msg || 'No autorizado'),
   forbidden: (msg) => new ForbiddenError(msg || 'Acceso denegado'),
+  internal: (msg) => new InternalServerError(msg || 'Error interno del servidor'),
+  unavailable: (msg) => new ServiceUnavailableError(msg || 'Servicio no disponible'),
+  timeout: (msg) => new GatewayTimeoutError(msg || 'Tiempo de espera agotado en el servidor'),
+  tooMany: (msg) => new TooManyRequestsError(msg || 'Demasiadas solicitudes, intente más tarde'),
   general: (msg) => new AppError(msg || 'Error en la aplicación')
 };
 

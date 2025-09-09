@@ -1,0 +1,198 @@
+{
+  "schema": "contacts",
+  "timestamps": true,
+  "attributes": [
+    {
+      "unique": true,
+      "name": "document",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "type",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": [
+        "client",
+        "provider"
+      ],
+      "default": "client",
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "name",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 1,
+      "maxlength": 32,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "description",
+      "type": "String",
+      "index": false,
+      "required": false,
+      "minlength": 1,
+      "maxlength": 64,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "name": "contact",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "email",
+          "type": "String",
+          "index": true,
+          "required": false,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": true,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": true,
+          "name": "phone",
+          "type": "String",
+          "index": true,
+          "required": false,
+          "minlength": 9,
+          "maxlength": 15,
+          "sparse": true,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": true,
+          "name": "website",
+          "type": "String",
+          "index": true,
+          "required": false,
+          "minlength": 2,
+          "maxlength": 64,
+          "sparse": true,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    },
+    {
+      "name": "address",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "street",
+          "type": "String",
+          "index": false,
+          "required": false,
+          "minlength": 2,
+          "maxlength": 64,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    },
+    {
+      "unique": false,
+      "name": "isVisible",
+      "type": "Boolean",
+      "index": true,
+      "required": null,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": true,
+      "ref": null
+    },
+    {
+      "name": "createdBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    },
+    {
+      "name": "updatedBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "ObjectId",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    }
+  ]
+}

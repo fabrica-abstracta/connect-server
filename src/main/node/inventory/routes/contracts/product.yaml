@@ -1,0 +1,513 @@
+openapi: 3.0.0
+servers: []
+info:
+  title: Inventory API
+  description: 'API para la gestión de inventario, incluyendo marcas, proveedores y categorías.'
+  version: 1.0.0
+security:
+  - AccessTokenCookie: []
+components:
+  securitySchemes:
+    AccessTokenCookie:
+      type: apiKey
+      in: cookie
+      name: accessToken
+  responses:
+    OK:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    Created:
+      description: Recurso creado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    Accepted:
+      description: Solicitud aceptada para procesamiento asíncrono
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    NoContent:
+      description: Operación exitosa sin datos
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    BadRequest:
+      description: Petición inválida
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    field:
+                      type: string
+                    message:
+                      type: string
+    Unauthorized:
+      description: No autenticado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                message: Autenticación requerida o token inválido
+    Forbidden:
+      description: Sin permisos
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                message: No tiene permisos para realizar esta acción
+    NotFound:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                message: Recurso no encontrado
+    RequestTimeout:
+      description: Tiempo de espera de la solicitud agotado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                code: REQUEST_TIMEOUT
+                status: 408
+                message: Tiempo de espera agotado
+    Conflict:
+      description: Conflicto de recurso
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                code: CONFLICT
+                status: 409
+                message: Conflicto al procesar la solicitud
+    UnprocessableEntity:
+      description: Entidad no procesable por errores de validación
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    field:
+                      type: string
+                    message:
+                      type: string
+    TooManyRequests:
+      description: Límite de solicitudes excedido
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+              retryAfterSeconds:
+                type: integer
+    InternalServerError:
+      description: Error interno del servidor
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              detail:
+                type: string
+              stack:
+                type: string
+    ServiceUnavailable:
+      description: Servicio no disponible temporalmente
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+              retryAfterSeconds:
+                type: integer
+paths:
+  # Product Endpoints
+  /create-product:
+    post:
+      summary: Crear producto
+      description: Crea un nuevo registro.
+      tags:
+        - product
+      operationId: create-product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: Nombre de la producto
+                description:
+                  type: string
+                  description: Descripción de la producto
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /update-product:
+    put:
+      summary: Actualizar una producto por ID
+      description: Actualiza una registro existente.
+      tags:
+        - product
+      operationId: update-product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  description: ID de la producto
+                name:
+                  type: string
+                  description: Nombre de la producto
+                description:
+                  type: string
+                  description: Descripción de la producto
+                isVisible:
+                  type: boolean
+                  description: Visibilidad de la producto
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /detail-product/{id}:
+    get:
+      summary: Obtener una producto por ID
+      description: Obtener un registro por ID.
+      tags:
+        - product
+      operationId: detail-product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identificador de la producto
+      responses:
+        '200':
+          description: Marca obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  sku:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  brand:
+                    type: string
+                  category:
+                    type: string
+                  unit:
+                    type: string
+                  salePrice:
+                    type: number
+                  stock:
+                    type: number
+                  status:
+                    type: string
+                  isVisible:
+                    type: boolean
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  createdBy:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      names:
+                        type: string
+                      email:
+                        type: string
+                        format: email
+                  updatedBy:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      names:
+                        type: string
+                      email:
+                        type: string
+                        format: email
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /delete-product/{id}:
+    delete:
+      summary: Eliminar una producto por ID
+      description: Elimina un registro por ID.
+      tags:
+        - product
+      operationId: delete-product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identificador de la producto
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /pagination-product:
+    post:
+      summary: Listar marcas con paginación
+      description: Obtiene una lista paginada de marcas ordenada por fecha de creación con filtros.
+      tags:
+        - product
+      operationId: pagination-product
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page:
+                  type: integer
+                  description: Número de página (por defecto 1)
+                perPage:
+                  type: integer
+                  description: Registros por página (por defecto 10, máximo 30)
+                sku:
+                  type: string
+                  description: Filtrar por SKU
+                name:
+                  type: string
+                  description: Filtrar por nombre
+                brand:
+                  type: string
+                  description: Filtrar por nombre
+                category:
+                  type: string
+                  description: Filtrar por nombre
+                unit:
+                  type: string
+                  description: Filtrar por nombre
+                status:
+                  type: string
+                  description: Filtrar por estado
+                  enum:
+                    - available
+                    - for_exhaustion
+                    - exhausted
+                isVisible:
+                  type: boolean
+                  description: Filtrar por estado de visibilidad
+                createdAtGte:
+                  type: string
+                  description: Fecha mínima de creación (formateada por el servidor)
+                createdAtLte:
+                  type: string
+                  description: Fecha máxima de creación (formateada por el servidor)
+      responses:
+        '200':
+          description: Lista paginada de marcas obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      perPage:
+                        type: integer
+                      totalPages:
+                        type: integer
+                      totalItems:
+                        type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        sku:
+                          type: string
+                        name:
+                          type: string
+                        brand:
+                          type: string
+                        category:
+                          type: string
+                        unit:
+                          type: string
+                        salePrice:
+                          type: string
+                        stock:
+                          type: string
+                        status:
+                          type: string
+                        isVisible:
+                          type: boolean
+                        createdAt:
+                          type: string
+                          description: Fecha formateada por el servidor
+                        createdBy:
+                          type: string
+                          description: Nombre del creador (auditado)
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'

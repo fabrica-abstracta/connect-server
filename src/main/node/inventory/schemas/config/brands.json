@@ -1,0 +1,120 @@
+{
+  "schema": "brands",
+  "timestamps": true,
+  "attributes": [
+    {
+      "unique": false,
+      "name": "name",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 1,
+      "maxlength": 32,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "description",
+      "type": "String",
+      "index": false,
+      "required": false,
+      "minlength": 1,
+      "maxlength": 64,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "store",
+      "type": "ObjectId",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": "stores"
+    },
+    {
+      "unique": false,
+      "name": "isVisible",
+      "type": "Boolean",
+      "index": true,
+      "required": null,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": true,
+      "ref": null
+    },
+    {
+      "name": "createdBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    },
+    {
+      "name": "updatedBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "ObjectId",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    }
+  ]
+}

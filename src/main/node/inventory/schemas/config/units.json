@@ -1,0 +1,279 @@
+{
+  "schema": "units",
+  "timestamps": true,
+  "attributes": [
+    {
+      "unique": false,
+      "name": "name",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 1,
+      "maxlength": 32,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "description",
+      "type": "String",
+      "index": false,
+      "required": false,
+      "minlength": 1,
+      "maxlength": 64,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": true,
+      "name": "symbol",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 1,
+      "maxlength": 16,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "system",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": [
+        "SI",
+        "Imperial",
+        "USC",
+        "Custom"
+      ],
+      "default": "SI",
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "dimension",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 1,
+      "maxlength": 32,
+      "sparse": false,
+      "enum": [
+        "unit",
+        "mass",
+        "length",
+        "time",
+        "temperature",
+        "area",
+        "volume",
+        "velocity",
+        "acceleration",
+        "other"
+      ],
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "isBase",
+      "type": "Boolean",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": false,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "baseUnit",
+      "type": "ObjectId",
+      "index": true,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": "units"
+    },
+    {
+      "unique": false,
+      "name": "factor",
+      "type": "Number",
+      "index": false,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": 1,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "offset",
+      "type": "Number",
+      "index": false,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": 0,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "numerator",
+      "type": "Array",
+      "index": false,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": [],
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "denominator",
+      "type": "Array",
+      "index": false,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": [],
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "aliases",
+      "type": "Array",
+      "index": false,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": [],
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "precision",
+      "type": "Number",
+      "index": false,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": 6,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "store",
+      "type": "ObjectId",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": "stores"
+    },
+    {
+      "unique": false,
+      "name": "isVisible",
+      "type": "Boolean",
+      "index": true,
+      "required": null,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": true,
+      "ref": null
+    },
+    {
+      "name": "createdBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    },
+    {
+      "name": "updatedBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "ObjectId",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    }
+  ]
+}

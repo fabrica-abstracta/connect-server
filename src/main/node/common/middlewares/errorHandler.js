@@ -1,4 +1,4 @@
-const generateUniqueCode = require("../helpers/uniqueCode");
+const { generateUniqueCode } = require("../helpers/helpers");
 
 const errorHandler = (err, req, res, next) => {
   if (err && err.isOperational && err.statusCode) {

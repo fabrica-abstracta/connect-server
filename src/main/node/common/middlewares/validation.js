@@ -1,5 +1,4 @@
 const exceptions = require('../helpers/exceptions');
-const { ValidationError } = require('../helpers/exceptions');
 
 const validateBody = (schema) => {
   return (req, res, next) => {

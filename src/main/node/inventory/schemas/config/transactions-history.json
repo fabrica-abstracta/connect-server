@@ -1,0 +1,179 @@
+{
+  "schema": "transactions_history",
+  "timestamps": true,
+  "attributes": [
+    {
+      "unique": true,
+      "name": "number",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 1,
+      "maxlength": 32,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "note",
+      "type": "String",
+      "index": false,
+      "required": false,
+      "minlength": 1,
+      "maxlength": 128,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "counterpartyType",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": [
+        "client",
+        "provider"
+      ],
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "counterparty",
+      "type": "ObjectId",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "direction",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": [
+        "in",
+        "out",
+        "neutral"
+      ],
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "warehouse",
+      "type": "ObjectId",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": "warehouses"
+    },
+    {
+      "unique": false,
+      "name": "store",
+      "type": "ObjectId",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": "stores"
+    },
+    {
+      "unique": false,
+      "name": "isVisible",
+      "type": "Boolean",
+      "index": true,
+      "required": null,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": true,
+      "ref": null
+    },
+    {
+      "name": "createdBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    },
+    {
+      "name": "updatedBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "ObjectId",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    }
+  ]
+}

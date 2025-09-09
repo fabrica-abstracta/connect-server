@@ -1,6 +1,6 @@
 const express = require('express');
 const Joi = require('joi');
-const { hashPassword, generateToken, parseExpirationTime, comparePassword, verifyToken } = require('../../common/helpers/security');
+const { hashPassword, generateToken, parseExpirationTime, comparePassword, verifyToken } = require('../../common/helpers/security/security');
 const { getSector, getSectorTerminology, getPlans } = require('../../common/config/data');
 const { v4: uuidv4 } = require("uuid");
 
@@ -125,7 +125,12 @@ router.post("/sign-up", validateBody(Joi.object({
     logger.info(`Creando token de acceso`);
     const accessToken = await generateToken({
       session: newSession._id.toString(),
-      account: newAccount._id.toString(),
+      account: {
+        id: newAccount._id.toString(),
+        type: "business_account",
+        names: newAccount.names,
+        email: newAccount.email
+      },
       store: newStore._id.toString(),
       subscription: newSubscription._id.toString(),
     });
@@ -138,9 +143,18 @@ router.post("/sign-up", validateBody(Joi.object({
       maxAge: parseExpirationTime(),
     });
 
-    if (variables.server.env === 'development') return res.status(201).send({ accessToken });
+    const accountProfilePhoto = await accountProfiles.findOne({ account: newAccount._id });
+    const profileData = {
+      paternalSurnames: newAccount.paternalSurnames,
+      maternalSurnames: newAccount.maternalSurnames,
+      names: newAccount.names,
+      type: "business_account",
+      profilePhoto: accountProfilePhoto.profilePhoto ? accountProfilePhoto.profilePhoto._id : null
+    };
 
-    return res.status(201).send();
+    if (variables.server.env === 'development') return res.status(201).send({ ...profileData, accessToken });
+
+    return res.status(201).send(profileData);
   } catch (error) {
     if (newSubscription) await accountSubscriptions.findByIdAndDelete(newSubscription._id);
     if (newSession) await accountSessions.findByIdAndDelete(newSession._id);
@@ -196,26 +210,29 @@ router.post("/sign-in", validateBody(Joi.object({
     }
   }
 
-  const profile = await accountProfiles.findOne({ account: account._id })
+  const accountProfilePhoto = await accountProfiles.findOne({ account: account._id })
     .populate('profilePhoto');
-  if (!profile) throw exceptions.notFound('Perfil no encontrado');
+  if (!accountProfilePhoto) throw exceptions.notFound('Perfil no encontrado');
 
   const profileData = {
     paternalSurnames: account.paternalSurnames,
     maternalSurnames: account.maternalSurnames,
     names: account.names,
-    profilePhoto: profile.profilePhoto,
-    language: profile.language,
+    type: "business_account",
+    profilePhoto: accountProfilePhoto.profilePhoto ? accountProfilePhoto.profilePhoto._id : null
   };
 
   const store = await stores.findOne({ account: account._id });
-  const subscription = await accountSubscriptions.findOne({ account: account._id });
 
   const accessToken = await generateToken({
     session: session._id.toString(),
-    account: account._id.toString(),
-    store: store._id.toString(),
-    subscription: subscription._id.toString(),
+    account: {
+      id: account._id.toString(),
+      type: "business_account",
+      names: account.names,
+      email: account.email
+    },
+    store: store._id.toString()
   });
 
   res.cookie('accessToken', accessToken, {
@@ -246,8 +263,7 @@ router.get("/recover/:identifier", validateParams(Joi.object({
 
   logger.info(`Cuenta encontrada: ${account ? account._id : 'no encontrada'}`);
 
-  if (!account) throw exceptions.unauthorized("If the account exists, a recovery link has been sent");
-
+  if (!account) throw exceptions.unauthorized("La cuenta proporcionada no existe");
 
   const expiresAt = new Date(Date.now() + variables.recover.timeoutMinutes * 60 * 1000);
   logger.info(`Fecha de expiracion de la sesion: ${formatDate(expiresAt)}`);
@@ -275,7 +291,7 @@ router.get("/recover/:identifier", validateParams(Joi.object({
   logger.info(`Correo de recuperacion enviado a: ${account.email}`);
 
   res.json({
-    message: "If the account exists, a recovery link has been sent"
+    message: "Si la cuenta existe, se ha enviado un enlace de recuperación"
   });
 });
 
@@ -325,7 +341,7 @@ router.post("/reset-password", validateBody(Joi.object({
 
 router.get("/validate-session", authentication, async (req, res) => {
   try {
-    logger.info(`Validacion de sesion exitosa para account: ${req.account.account || 'desconocido'}`);
+    logger.info(`Validacion de sesion exitosa para account: ${req.account.account.id || 'desconocido'}`);
     res.send();
   } catch (error) {
     logger.error('Ocurrio algo inesperado en validate-session: ' + error.message);
@@ -336,17 +352,17 @@ router.get("/validate-session", authentication, async (req, res) => {
 router.get("/logout", authentication, async (req, res) => {
   try {
     const { account, session } = req.account;
-    logger.info(`Cerrando sesion de usuario: ${account}, sessionId: ${session}`);
+    logger.info(`Cerrando sesion de usuario: ${account.id}, sessionId: ${session}`);
 
     logger.info('Validando sesion');
 
     const result = await accountSessions.updateOne(
-      { _id: session, account: account, status: 'active' },
+      { _id: session, account: account.id, status: 'active' },
       { $set: { status: 'logout' } }
     );
 
     if (result.matchedCount === 0) {
-      logger.warn(`No se encontró sesion activa para account ${account} y sessionId ${session}`);
+      logger.warn(`No se encontró sesion activa para account ${account.id} y sessionId ${session}`);
     } else {
       logger.info('Sesion cerrada');
     }

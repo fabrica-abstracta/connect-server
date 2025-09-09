@@ -1,0 +1,267 @@
+{
+  "schema": "products",
+  "timestamps": true,
+  "attributes": [
+    {
+      "unique": true,
+      "name": "sku",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": true,
+      "name": "barcode",
+      "type": "String",
+      "index": true,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "name",
+      "type": "String",
+      "index": true,
+      "required": true,
+      "minlength": 1,
+      "maxlength": 32,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "description",
+      "type": "String",
+      "index": false,
+      "required": false,
+      "minlength": 1,
+      "maxlength": 64,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "brand",
+      "type": "ObjectId",
+      "index": true,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": "brands"
+    },
+    {
+      "unique": false,
+      "name": "category",
+      "type": "ObjectId",
+      "index": true,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": "categories"
+    },
+    {
+      "unique": false,
+      "name": "unit",
+      "type": "ObjectId",
+      "index": true,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": true,
+      "enum": null,
+      "default": null,
+      "ref": "units"
+    },
+    {
+      "unique": false,
+      "name": "salePrice",
+      "type": "Number",
+      "index": false,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "saleCurrency",
+      "type": "String",
+      "index": true,
+      "required": false,
+      "minlength": 2,
+      "maxlength": 6,
+      "sparse": true,
+      "enum": null,
+      "default": "PEN",
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "stockCurrent",
+      "type": "Number",
+      "index": false,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": 0,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "stockMin",
+      "type": "Number",
+      "index": false,
+      "required": false,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": 0,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "stockReserved",
+      "type": "Number",
+      "index": false,
+      "required": null,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": 0,
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "status",
+      "type": "String",
+      "index": true,
+      "required": null,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": [
+        "available",
+        "for_exhaustion",
+        "exhausted"
+      ],
+      "default": "available",
+      "ref": null
+    },
+    {
+      "unique": false,
+      "name": "store",
+      "type": "ObjectId",
+      "index": true,
+      "required": true,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": null,
+      "ref": "stores"
+    },
+    {
+      "unique": false,
+      "name": "isVisible",
+      "type": "Boolean",
+      "index": true,
+      "required": null,
+      "minlength": null,
+      "maxlength": null,
+      "sparse": false,
+      "enum": null,
+      "default": true,
+      "ref": null
+    },
+    {
+      "name": "createdBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    },
+    {
+      "name": "updatedBy",
+      "attributes": [
+        {
+          "unique": false,
+          "name": "id",
+          "type": "ObjectId",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        },
+        {
+          "unique": false,
+          "name": "type",
+          "type": "String",
+          "index": true,
+          "required": true,
+          "minlength": null,
+          "maxlength": null,
+          "sparse": false,
+          "enum": null,
+          "default": null,
+          "ref": null
+        }
+      ]
+    }
+  ]
+}

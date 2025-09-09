@@ -1,0 +1,604 @@
+openapi: 3.0.0
+servers: []
+info:
+  title: Inventory API
+  description: 'API para la gestión de inventario, incluyendo marcas, proveedores y categorías.'
+  version: 1.0.0
+security:
+  - AccessTokenCookie: []
+components:
+  securitySchemes:
+    AccessTokenCookie:
+      type: apiKey
+      in: cookie
+      name: accessToken
+  responses:
+    OK:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    Created:
+      description: Recurso creado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    Accepted:
+      description: Solicitud aceptada para procesamiento asíncrono
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    NoContent:
+      description: Operación exitosa sin datos
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    BadRequest:
+      description: Petición inválida
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    field:
+                      type: string
+                    message:
+                      type: string
+    Unauthorized:
+      description: No autenticado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                message: Autenticación requerida o token inválido
+    Forbidden:
+      description: Sin permisos
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                message: No tiene permisos para realizar esta acción
+    NotFound:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                message: Recurso no encontrado
+    RequestTimeout:
+      description: Tiempo de espera de la solicitud agotado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                code: REQUEST_TIMEOUT
+                status: 408
+                message: Tiempo de espera agotado
+    Conflict:
+      description: Conflicto de recurso
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                code: CONFLICT
+                status: 409
+                message: Conflicto al procesar la solicitud
+    UnprocessableEntity:
+      description: Entidad no procesable por errores de validación
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    field:
+                      type: string
+                    message:
+                      type: string
+    TooManyRequests:
+      description: Límite de solicitudes excedido
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+              retryAfterSeconds:
+                type: integer
+    InternalServerError:
+      description: Error interno del servidor
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              detail:
+                type: string
+              stack:
+                type: string
+    ServiceUnavailable:
+      description: Servicio no disponible temporalmente
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              status:
+                type: integer
+              message:
+                type: string
+              retryAfterSeconds:
+                type: integer
+paths:
+  # Contact Endpoints
+  /create-contact:
+    post:
+      summary: Crear contacto
+      description: Crea un nuevo registro.
+      tags:
+        - contact
+      operationId: create-contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                document:
+                  type: string
+                  description: Documento del contacto
+                type:
+                  type: string
+                  description: Tipo de contacto
+                  enum:
+                    - client
+                    - provider
+                name:
+                  type: string
+                  description: Nombre de contacto
+                description:
+                  type: string
+                  description: Descripción de contacto
+                contact:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                      description: Correo electrónico de contacto
+                      minLength: 5
+                      maxLength: 64
+                    phone:
+                      type: string
+                      description: Número de teléfono de contacto
+                      minLength: 9
+                      maxLength: 15
+                    website:
+                      type: string
+                      description: Sitio web del contacto
+                      minLength: 2
+                      maxLength: 64
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                      description: Calle de la dirección
+                      minLength: 2
+                      maxLength: 64
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /update-contact:
+    put:
+      summary: Actualizar un contacto por ID
+      description: Actualiza un contacto existente perteneciente a la tienda del usuario autenticado.
+      tags:
+        - contact
+      operationId: update-contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  description: ID de contacto
+                document:
+                  type: string
+                  description: Documento del contacto
+                type:
+                  type: string
+                  description: Tipo de contacto
+                  enum:
+                    - client
+                    - provider
+                name:
+                  type: string
+                  description: Nombre de contacto
+                description:
+                  type: string
+                  description: Descripción de contacto
+                contact:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                      description: Correo electrónico de contacto
+                      minLength: 5
+                      maxLength: 64
+                    phone:
+                      type: string
+                      description: Número de teléfono de contacto
+                      minLength: 9
+                      maxLength: 15
+                    website:
+                      type: string
+                      description: Sitio web del contacto
+                      minLength: 2
+                      maxLength: 64
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                      description: Calle de la dirección
+                      minLength: 2
+                      maxLength: 64
+                isVisible:
+                  type: boolean
+                  description: Visibilidad de contacto
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /detail-contact/{id}:
+    get:
+      summary: Obtener una contacto por ID
+      description: Devuelve la información detallada de una contacto según su ID y la tienda del usuario autenticado.
+      tags:
+        - contact
+      operationId: detail-contact
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identificador de contacto
+      responses:
+        '200':
+          description: Marca obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  document:
+                    type: string
+                    description: Documento del contacto
+                  type:
+                    type: string
+                    description: Tipo de contacto
+                    enum:
+                      - client
+                      - provider
+                  name:
+                    type: string
+                    description: Nombre de contacto
+                  description:
+                    type: string
+                    description: Descripción de contacto
+                  contact:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                        description: Correo electrónico de contacto
+                        minLength: 5
+                        maxLength: 64
+                      phone:
+                        type: string
+                        description: Número de teléfono de contacto
+                        minLength: 9
+                        maxLength: 15
+                      website:
+                        type: string
+                        description: Sitio web del contacto
+                        minLength: 2
+                        maxLength: 64
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                        description: Calle de la dirección
+                        minLength: 2
+                        maxLength: 64
+                  isVisible:
+                    type: boolean
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  createdBy:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      names:
+                        type: string
+                      email:
+                        type: string
+                        format: email
+                  updatedBy:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      names:
+                        type: string
+                      email:
+                        type: string
+                        format: email
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /delete-contact/{id}:
+    delete:
+      summary: Eliminar una contacto por ID
+      description: Elimina un registro por ID.
+      tags:
+        - contact
+      operationId: delete-contact
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identificador de contacto
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /pagination-contact:
+    post:
+      summary: Listar categorias con paginación
+      description: Obtiene una lista paginada de categorias ordenada por fecha de creación con filtros.
+      tags:
+        - contact
+      operationId: pagination-contact
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page:
+                  type: integer
+                  description: Número de página (por defecto 1)
+                perPage:
+                  type: integer
+                  description: Registros por página (por defecto 10, máximo 30)
+                document:
+                  type: string
+                  description: Documento del contacto
+                type:
+                  type: string
+                  description: Tipo de contacto
+                  enum:
+                    - client
+                    - provider
+                name:
+                  type: string
+                  description: Nombre de contacto
+                email:
+                  type: string
+                  format: email
+                  description: Correo electrónico de contacto
+                  minLength: 5
+                  maxLength: 64
+                phone:
+                  type: string
+                  description: Número de teléfono de contacto
+                  minLength: 9
+                  maxLength: 15
+                isVisible:
+                  type: boolean
+                  description: Filtrar por estado de visibilidad
+                createdAtGte:
+                  type: string
+                  description: Fecha mínima de creación (formateada por el servidor)
+                createdAtLte:
+                  type: string
+                  description: Fecha máxima de creación (formateada por el servidor)
+      responses:
+        '200':
+          description: Lista paginada de categorias obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      perPage:
+                        type: integer
+                      totalPages:
+                        type: integer
+                      totalItems:
+                        type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: ID de contacto
+                        name:
+                          type: string
+                          description: Nombre de contacto
+                        type:
+                          type: string
+                          description: Tipo de contacto
+                        email:
+                          type: string
+                          description: Correo electrónico de contacto
+                        isVisible:
+                          type: boolean
+                        createdAt:
+                          type: string
+                          description: Fecha formateada por el servidor
+                        createdBy:
+                          type: string
+                          description: Nombre del creador (auditado)
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'

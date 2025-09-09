@@ -2,7 +2,6 @@ const { Buffer } = require('buffer');
 const transporter = require('../../config/email');
 const { variables } = require('../../config/env');
 
-
 async function sendRecoveryEmail(to, code) {
   let html;
   const template = variables.email.recoverHtml;

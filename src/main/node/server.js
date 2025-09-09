@@ -14,6 +14,7 @@ const { errorHandler } = require('./common/middlewares/errorHandler');
 const app = express();
 const limiter = rateLimit(config.rateLimit);
 const { getSectors, getPlans, getUnitsOfMeasure, getFeatures, getModules } = require('./common/config/data');
+const authentication = require('./common/middlewares/authentication');
 
 app.use(helmet());
 app.use(compression());
@@ -24,6 +25,12 @@ app.use(express.json({ limit: config.express.jsonLimit }));
 app.use(express.urlencoded({ extended: true, limit: config.express.urlencodedLimit }));
 
 app.use('/', require('./authentication/index'));
+app.use('/', require('./file/index'));
+app.use('/', authentication, require('./account/index'));
+app.use('/', authentication, require('./store/index'));
+app.use('/', authentication, require('./manual/index'));
+app.use('/', authentication, require('./saas/index'));
+app.use('/', authentication, require('./inventory/index'));
 
 app.use((req, res, next) => {
   res.status(404).json({

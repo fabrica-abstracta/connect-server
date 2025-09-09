@@ -1,5 +1,5 @@
 const exceptions = require('../helpers/exceptions');
-const { verifyToken } = require('../helpers/security');
+const { verifyToken } = require('../helpers/security/security');
 const accountSessions = require('../../authentication/schemas/accountSessions');
 const logger = require('../config/logger');
 
