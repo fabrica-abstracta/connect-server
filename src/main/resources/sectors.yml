@@ -1,0 +1,64 @@
+sectors:
+  industry:
+    name: "Industria"
+    description: "Sector industrial general"
+    terminology:
+      local: "planta"
+      level: "área"
+      space: "estación"
+  restaurant:
+    name: "Restaurante"
+    description: "Negocio de servicio de comidas y bebidas"
+    terminology:
+      local: "restaurante"
+      level: "piso"
+      space: "mesa"
+  hotel:
+    name: "Hotel"
+    description: "Negocio de hospedaje y servicios"
+    terminology:
+      local: "hotel"
+      level: "piso"
+      space: "habitación"
+  retail:
+    name: "Comercio Minorista"
+    description: "Negocio de venta al por menor"
+    terminology:
+      local: "tienda"
+      level: "área"
+      space: "estante"
+  warehouse:
+    name: "Almacén/Bodega"
+    description: "Negocio de almacenamiento y distribución"
+    terminology:
+      local: "almacén"
+      level: "zona"
+      space: "estantería"
+  pharmacy:
+    name: "Farmacia"
+    description: "Negocio farmacéutico y de salud"
+    terminology:
+      local: "farmacia"
+      level: "sección"
+      space: "vitrina"
+  gym:
+    name: "Gimnasio"
+    description: "Negocio de fitness y entrenamiento"
+    terminology:
+      local: "gimnasio"
+      level: "área"
+      space: "zona de entrenamiento"
+  supermarket:
+    name: "Supermercado"
+    description: "Negocio de venta de productos de consumo masivo"
+    terminology:
+      local: "supermercado"
+      level: "pasillo"
+      space: "góndola"
+  bakery:
+    name: "Panadería"
+    description: "Negocio de productos de panadería y repostería"
+    terminology:
+      local: "panadería"
+      level: "sección"
+      space: "mostrador"

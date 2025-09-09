@@ -1,0 +1,91 @@
+plans:
+  basic:
+    name: "Plan Básico"
+    description: "Plan inicial para pequeños negocios"
+    price: 29.99
+    currency: "PEN"
+    billing_period: "monthly"
+    trial:
+      days: 7
+    limits:
+      storage:
+        limit: 1
+        unit: "MB"
+      staff:
+        limit: 5
+        unit: "accounts"
+    modules:
+      - inventory
+      - reports
+    features:
+      - basic_support
+      - email_notifications
+      - data_export
+  professional:
+    name: "Plan Profesional"
+    description: "Plan para medianas empresas"
+    price: 79.99
+    currency: "PEN"
+    billing_period: "monthly"
+    trial:
+      days: 14
+    limits:
+      storage:
+        limit: 1
+        unit: "MB"
+      staff:
+        limit: 5
+        unit: "accounts"
+    modules:
+      - inventory
+      - reports
+      - sales
+      - purchases
+      - customers
+      - suppliers
+    features:
+      - priority_support
+      - email_notifications
+      - sms_notifications
+      - api_access
+      - custom_reports
+      - data_export
+  enterprise:
+    name: "Plan Empresarial"
+    description: "Plan para grandes empresas"
+    price: 199.99
+    currency: "PEN"
+    billing_period: "monthly"
+    trial:
+      days: 30
+    limits:
+      storage:
+        limit: 1
+        unit: "MB"
+      staff:
+        limit: 5
+        unit: "accounts"
+    modules:
+      - inventory
+      - reports
+      - sales
+      - purchases
+      - customers
+      - suppliers
+      - analytics
+      - integrations
+      - users
+    features:
+      - dedicated_support
+      - email_notifications
+      - sms_notifications
+      - push_notifications
+      - api_access
+      - webhook_support
+      - third_party_integrations
+      - white_label
+      - custom_fields
+      - custom_reports
+      - advanced_analytics
+      - predictive_analytics
+      - data_export

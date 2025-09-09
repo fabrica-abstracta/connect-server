@@ -1,0 +1,80 @@
+features:
+  # Support Features
+  basic_support:
+    name: "Soporte Básico"
+    description: "Soporte por email en horario comercial"
+    category: "support"
+    
+  priority_support:
+    name: "Soporte Prioritario"
+    description: "Soporte prioritario con respuesta en menos de 24 horas"
+    category: "support"
+    
+  dedicated_support:
+    name: "Soporte Dedicado"
+    description: "Soporte dedicado con representante asignado y línea directa"
+    category: "support"
+    
+  # Notification Features
+  email_notifications:
+    name: "Notificaciones por Email"
+    description: "Notificaciones automáticas por correo electrónico"
+    category: "notification"
+    
+  sms_notifications:
+    name: "Notificaciones por SMS"
+    description: "Notificaciones automáticas por mensajes de texto"
+    category: "notification"
+    
+  push_notifications:
+    name: "Notificaciones Push"
+    description: "Notificaciones push en tiempo real"
+    category: "notification"
+    
+  # Integration Features
+  api_access:
+    name: "Acceso a API"
+    description: "Acceso completo a la API REST para integraciones"
+    category: "integration"
+    
+  webhook_support:
+    name: "Soporte de Webhooks"
+    description: "Capacidad de configurar webhooks para eventos del sistema"
+    category: "integration"
+    
+  third_party_integrations:
+    name: "Integraciones de Terceros"
+    description: "Integraciones pre-construidas con sistemas populares"
+    category: "integration"
+    
+  # Customization Features
+  white_label:
+    name: "Marca Blanca"
+    description: "Personalización completa de la marca y diseño"
+    category: "customization"
+    
+  custom_fields:
+    name: "Campos Personalizados"
+    description: "Capacidad de agregar campos personalizados a formularios"
+    category: "customization"
+    
+  custom_reports:
+    name: "Reportes Personalizados"
+    description: "Creación de reportes personalizados con query builder"
+    category: "customization"
+    
+  # Analytics Features
+  advanced_analytics:
+    name: "Analytics Avanzado"
+    description: "Dashboards avanzados y métricas detalladas"
+    category: "analytics"
+    
+  predictive_analytics:
+    name: "Analytics Predictivo"
+    description: "Análisis predictivo y forecasting con IA"
+    category: "analytics"
+    
+  data_export:
+    name: "Exportación de Datos"
+    description: "Exportación de datos en múltiples formatos (CSV, Excel, PDF)"
+    category: "analytics"

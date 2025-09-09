@@ -1,0 +1,36 @@
+modules:
+  inventory:
+    name: "Gestión de Inventario"
+    description: "Módulo completo de gestión de inventarios, productos, categorías y movimientos de stock"
+    
+  reports:
+    name: "Reportes"
+    description: "Módulo de reportes y análisis de datos del negocio"
+    
+  sales:
+    name: "Gestión de Ventas"
+    description: "Módulo de gestión de ventas, órdenes y facturación"
+    
+  purchases:
+    name: "Gestión de Compras"
+    description: "Módulo de gestión de compras y órdenes de compra"
+    
+  customers:
+    name: "Gestión de Clientes"
+    description: "CRM básico para gestión de clientes y relaciones comerciales"
+    
+  suppliers:
+    name: "Gestión de Proveedores"
+    description: "Módulo para gestión de proveedores y relaciones comerciales"
+    
+  analytics:
+    name: "Analytics Avanzado"
+    description: "Analytics y métricas avanzadas con dashboards interactivos"
+    
+  integrations:
+    name: "Integraciones"
+    description: "Integraciones con sistemas externos y APIs de terceros"
+    
+  users:
+    name: "Gestión de Usuarios"
+    description: "Módulo para gestión de usuarios, roles y permisos del sistema"

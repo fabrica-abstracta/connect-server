@@ -1,0 +1,178 @@
+units_of_measure: # Unidades base del Sistema Internacional (SI)
+  base_units:
+    # Masa
+    kilogram:
+      name: "Kilogramo"
+      symbol: "kg"
+      type: "mass"
+      is_base: true
+      system: "SI"
+    # Longitud
+    meter:
+      name: "Metro"
+      symbol: "m"
+      type: "length"
+      is_base: true
+      system: "SI"
+    # Volumen
+    liter:
+      name: "Litro"
+      symbol: "L"
+      type: "volume"
+      is_base: true
+      system: "SI"
+    # Cantidad
+    unit:
+      name: "Unidad"
+      symbol: "u"
+      type: "quantity"
+      is_base: true
+      system: "universal"
+  mass: # Conversiones de masa
+    gram:
+      name: "Gramo"
+      symbol: "g"
+      base_unit: "kilogram"
+      conversion_factor: 0.001
+    ton:
+      name: "Tonelada"
+      symbol: "t"
+      base_unit: "kilogram"
+      conversion_factor: 1000
+    pound:
+      name: "Libra"
+      symbol: "lb"
+      base_unit: "kilogram"
+      conversion_factor: 0.453592
+    ounce:
+      name: "Onza"
+      symbol: "oz"
+      base_unit: "kilogram"
+      conversion_factor: 0.0283495
+  volume: # Conversiones de volumen
+    milliliter:
+      name: "Mililitro"
+      symbol: "ml"
+      base_unit: "liter"
+      conversion_factor: 0.001
+    gallon:
+      name: "Galón"
+      symbol: "gal"
+      base_unit: "liter"
+      conversion_factor: 3.78541
+    cup:
+      name: "Taza"
+      symbol: "cup"
+      base_unit: "liter"
+      conversion_factor: 0.236588
+    tablespoon:
+      name: "Cuchara"
+      symbol: "tbsp"
+      base_unit: "liter"
+      conversion_factor: 0.0147868
+    teaspoon:
+      name: "Cucharadita"
+      symbol: "tsp"
+      base_unit: "liter"
+      conversion_factor: 0.00492892
+  length: # Conversiones de longitud
+    centimeter:
+      name: "Centímetro"
+      symbol: "cm"
+      base_unit: "meter"
+      conversion_factor: 0.01
+    millimeter:
+      name: "Milímetro"
+      symbol: "mm"
+      base_unit: "meter"
+      conversion_factor: 0.001
+    kilometer:
+      name: "Kilómetro"
+      symbol: "km"
+      base_unit: "meter"
+      conversion_factor: 1000
+    inch:
+      name: "Pulgada"
+      symbol: "in"
+      base_unit: "meter"
+      conversion_factor: 0.0254
+    foot:
+      name: "Pie"
+      symbol: "ft"
+      base_unit: "meter"
+      conversion_factor: 0.3048
+  packaging: # Unidades de cantidad/empaque
+    dozen:
+      name: "Docena"
+      symbol: "dz"
+      base_unit: "unit"
+      conversion_factor: 12
+    sixpack:
+      name: "Six Pack"
+      symbol: "6pk"
+      base_unit: "unit"
+      conversion_factor: 6
+    case:
+      name: "Caja"
+      symbol: "case"
+      base_unit: "unit"
+      conversion_factor: 24
+    pack:
+      name: "Paquete"
+      symbol: "pk"
+      base_unit: "unit"
+      conversion_factor: 1
+      description: "Unidad genérica de empaque"
+  specialized: # Unidades especiales para diferentes industrias
+    # Farmacia
+    tablet:
+      name: "Pastilla"
+      symbol: "tab"
+      base_unit: "unit"
+      conversion_factor: 1
+      industry: "pharmacy"
+    capsule:
+      name: "Cápsula"
+      symbol: "cap"
+      base_unit: "unit"
+      conversion_factor: 1
+      industry: "pharmacy"
+    vial:
+      name: "Vial"
+      symbol: "vial"
+      base_unit: "unit"
+      conversion_factor: 1
+      industry: "pharmacy"
+    # Restaurante
+    portion:
+      name: "Porción"
+      symbol: "port"
+      base_unit: "unit"
+      conversion_factor: 1
+      industry: "restaurant"
+    serving:
+      name: "Ración"
+      symbol: "srv"
+      base_unit: "unit"
+      conversion_factor: 1
+      industry: "restaurant"
+    # Panadería
+    loaf:
+      name: "Barra"
+      symbol: "loaf"
+      base_unit: "unit"
+      conversion_factor: 1
+      industry: "bakery"
+    slice:
+      name: "Rebanada"
+      symbol: "slice"
+      base_unit: "unit"
+      conversion_factor: 1
+      industry: "bakery"
+custom_units: # Configuracion para permitir unidades personalizadas del usuario
+  enabled: true
+  validation:
+    name_max_length: 50
+    symbol_max_length: 10
+    require_conversion_factor: true
+    require_base_unit: true
